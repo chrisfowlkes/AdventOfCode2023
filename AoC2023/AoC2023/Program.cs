@@ -1,13 +1,19 @@
 ﻿using Classes;
+using Classes.Services;
 
 var input = Console.ReadLine();
+string[] data;
 string result;
+
 switch (input)
 {
     case "1A":
-        var data = File.ReadAllLines(".\\Data\\1A.txt");
-        var doc = new CalibrationDocument(data);
-        result = doc.Calculate();
+        data = File.ReadAllLines(".\\Data\\1.txt");
+        result = AdventOfCodeService.ReadCalibration(data);
+        break;
+    case "1B":
+        data = File.ReadAllLines(".\\Data\\1.txt");
+        result = AdventOfCodeService.ReadCalibration(data, true);
         break;
     default:
         result = "Error";

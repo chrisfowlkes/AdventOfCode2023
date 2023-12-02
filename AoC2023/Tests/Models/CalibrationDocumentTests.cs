@@ -14,37 +14,22 @@ namespace Tests.Models
     public class CalibrationDocumentTests
     {
         /// <summary>
-        /// Tests the calculate method without transalation.
+        /// Tests the calculate method.
         /// </summary>
-        [Fact]
-        public void Calculate_DontTranslate_Calculates()
+        [Theory()]
+        [InlineData(".\\Data\\1A.txt", false, 142)]
+        [InlineData(".\\Data\\1B.txt", true, 281)]
+        public void Calculate_DontTranslate_Calculates(string input, bool translate, int result)
         {
             //Arrange
-            var data = File.ReadAllLines(".\\Data\\1A.txt");
+            var data = File.ReadAllLines(input);
             var c = new CalibrationDocument(data);
 
             //Act
-            var i = c.Calculate();
+            var i = c.Calculate(translate);
 
             //Assert
-            Assert.Equal(142, i);
-        }
-
-        /// <summary>
-        /// Tests the calculate method with transalation.
-        /// </summary>
-        [Fact]
-        public void Calculate_Translate_Calculates()
-        {
-            //Arrange
-            var data = File.ReadAllLines(".\\Data\\1B.txt");
-            var c = new CalibrationDocument(data);
-
-            //Act
-            var i = c.Calculate(true);
-
-            //Assert
-            Assert.Equal(281, i);
+            Assert.Equal(result, i);
         }
     }
 }

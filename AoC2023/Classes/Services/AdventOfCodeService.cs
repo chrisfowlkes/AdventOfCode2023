@@ -28,23 +28,40 @@ namespace Classes.Services
         /// red cubes, 13 green cubes, and 14 blue cubes.
         /// </summary>
         /// <param name="data">The games played.</param>
-        /// <returns></returns>
+        /// <returns>Sum of the possible game IDs.</returns>
         public static string SumPossibleGameIds(ICollection<string> data)
         {
             var games = new List<CubeGame>();
-            foreach(var game in data)
+            foreach (var game in data)
             {
                 games.Add(new CubeGame(game));
             }
 
             return games.Where(
-                game => game.MinimumRed <= 12 
-                && game.MinimumGreen <= 13 
-                && game.MinimumBlue <= 14 
+                game => game.MinimumRed <= 12
+                && game.MinimumGreen <= 13
+                && game.MinimumBlue <= 14
                 && game.MinimumCubes <= 39)
                 .Select(game => game.Id)
                 .Sum()
                 .ToString();
+        }
+
+        /// <summary>
+        /// For each game, find the minimum set of cubes that must have been present. What is the 
+        /// sum of the power of these sets?
+        /// </summary>
+        /// <param name="data">The games played.</param>
+        /// <returns>Sum of the powers of th games</returns>
+        public static string SumPowers(ICollection<string> data)
+        {
+            var games = new List<CubeGame>();
+            foreach (var game in data)
+            {
+                games.Add(new CubeGame(game));
+            }
+
+            return games.Select(game => game.Power).Sum().ToString();
         }
     }
 }

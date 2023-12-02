@@ -19,6 +19,10 @@ switch (input)
         data = File.ReadAllLines(".\\Data\\2.txt");
         result = AdventOfCodeService.SumPossibleGameIds(data);
         break;
+    case "2B":
+        data = File.ReadAllLines(".\\Data\\2.txt");
+        result = AdventOfCodeService.SumPowers(data);
+        break;
     default:
         result = "Error";
         break;

@@ -37,7 +37,11 @@ namespace Classes.Models
         /// The minimum number of cubes present in the bag.
         /// </summary>
         public int MinimumCubes {  get { return MinimumRed + MinimumGreen + MinimumBlue; } }
-
+        /// <summary>
+        /// The power of a set of cubes is equal to the numbers of red, green, and blue cubes 
+        /// multiplied together.
+        /// </summary>
+        public int Power {  get { return MinimumRed * MinimumGreen * MinimumBlue; } }
         /// <summary>
         /// Constructor.
         /// </summary>

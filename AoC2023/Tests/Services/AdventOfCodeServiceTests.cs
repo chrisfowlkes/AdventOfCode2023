@@ -19,13 +19,29 @@ namespace Tests.Services
         public void SumPossibleGameIds()
         {
             //Arrange
-            var data = File.ReadAllLines(".\\Data\\2A.txt");
+            var data = File.ReadAllLines(".\\Data\\2.txt");
 
             //Act
             var result = AdventOfCodeService.SumPossibleGameIds(data);
 
             //Assert
             Assert.Equal("8", result);
+        }
+
+        /// <summary>
+        /// Test for the SumPowers method.
+        /// </summary>
+        [Fact]
+        public void SumPowers()
+        {
+            //Arrange
+            var data = File.ReadAllLines(".\\Data\\2.txt");
+
+            //Act
+            var result = AdventOfCodeService.SumPowers(data);
+
+            //Assert
+            Assert.Equal("2286", result);
         }
     }
 }

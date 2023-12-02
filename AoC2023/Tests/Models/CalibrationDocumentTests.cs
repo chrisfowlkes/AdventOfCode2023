@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tests
+namespace Tests.Models
 {
     /// <summary>
     /// Tests for the calibration document class.

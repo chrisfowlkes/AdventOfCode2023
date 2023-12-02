@@ -22,5 +22,29 @@ namespace Classes.Services
             var doc = new CalibrationDocument(data);
             return doc.Calculate(translate).ToString();
         }
+
+        /// <summary>
+        /// Determine which games would have been possible if the bag had been loaded with only 12 
+        /// red cubes, 13 green cubes, and 14 blue cubes.
+        /// </summary>
+        /// <param name="data">The games played.</param>
+        /// <returns></returns>
+        public static string SumPossibleGameIds(ICollection<string> data)
+        {
+            var games = new List<CubeGame>();
+            foreach(var game in data)
+            {
+                games.Add(new CubeGame(game));
+            }
+
+            return games.Where(
+                game => game.MinimumRed <= 12 
+                && game.MinimumGreen <= 13 
+                && game.MinimumBlue <= 14 
+                && game.MinimumCubes <= 39)
+                .Select(game => game.Id)
+                .Sum()
+                .ToString();
+        }
     }
 }

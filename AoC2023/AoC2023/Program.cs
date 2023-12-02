@@ -15,6 +15,10 @@ switch (input)
         data = File.ReadAllLines(".\\Data\\1.txt");
         result = AdventOfCodeService.ReadCalibration(data, true);
         break;
+    case "2A":
+        data = File.ReadAllLines(".\\Data\\2.txt");
+        result = AdventOfCodeService.SumPossibleGameIds(data);
+        break;
     default:
         result = "Error";
         break;

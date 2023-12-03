@@ -65,7 +65,7 @@ namespace Classes.Services
         }
 
         /// <summary>
-        /// SUms the engine parts in a schematic document.
+        /// Sums the engine parts in a schematic document.
         /// </summary>
         /// <param name="data">Schematic.</param>
         /// <returns>Sum of the engine part numbers.</returns>
@@ -73,6 +73,17 @@ namespace Classes.Services
         {
             var schematic = new EngineSchematic(data);
             return schematic.EngineParts.Select(part => part.Number).Sum().ToString();
+        }
+
+        /// <summary>
+        /// Sums the engine gear ratios in a schematic document.
+        /// </summary>
+        /// <param name="data">Schematic.</param>
+        /// <returns>Sum of the engine gear ratios.</returns>
+        public static string SumEngineGearRatios(ICollection<string> data)
+        {
+            var schematic = new EngineSchematic(data);
+            return schematic.EngineGears.Select(gear => gear.Ratio).Sum().ToString();
         }
     }
 }

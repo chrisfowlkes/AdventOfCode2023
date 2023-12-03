@@ -27,5 +27,9 @@ namespace Classes.Models
         /// The length of the string version of the part number.
         /// </summary>
         public int PartNumberLength { get; set; }
+        /// <summary>
+        /// The zero based column at which the part number ends in the schematic.
+        /// </summary>
+        public int EndColumn { get; set; }
     }
 }

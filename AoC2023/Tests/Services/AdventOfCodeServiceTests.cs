@@ -59,5 +59,21 @@ namespace Tests.Services
             //Assert
             Assert.Equal("4361", result);
         }
+
+        /// <summary>
+        /// Test for the SumEngineGearRatios method.
+        /// </summary>
+        [Fact]
+        public void SumEngineGearRatios()
+        {
+            //Arrange
+            var data = File.ReadAllLines(".\\Data\\3.txt");
+
+            //Act
+            var result = AdventOfCodeService.SumEngineGearRatios(data);
+
+            //Assert
+            Assert.Equal("467835", result);
+        }
     }
 }

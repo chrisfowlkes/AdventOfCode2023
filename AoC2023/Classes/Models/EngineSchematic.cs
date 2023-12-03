@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -16,8 +17,17 @@ namespace Classes.Models
     {
 
         [GeneratedRegex(@"\d+")]
-        private static partial Regex MyRegex();
+        private static partial Regex PartRegex();
+        [GeneratedRegex(@"\*")]
+        private static partial Regex GearRegex();
+        /// <summary>
+        /// All parts found in the schematic.
+        /// </summary>
         public List<EnginePart> EngineParts { get; set; } = [];
+        /// <summary>
+        /// All gears found in the schematic.
+        /// </summary>
+        public List<EngineGear> EngineGears { get; set; } = [];
         private readonly ICollection<string> data;
 
         /// <summary>
@@ -28,20 +38,29 @@ namespace Classes.Models
         { 
             this.data = data;
             FindEngineParts();
+            FindEngineGears();
         }
 
         private void FindEngineParts()
         {
-            for(int i=0;i<data.Count;i++)
+            for (int i = 0; i < data.Count; i++)
             {
                 EngineParts.AddRange(GetEngineParts(i));
+            }
+        }
+
+        private void FindEngineGears()
+        {
+            for (int i = 0; i < data.Count; i++)
+            {
+                EngineGears.AddRange(GetEngineGears(i));
             }
         }
 
         private List<EnginePart> GetEngineParts(int row) 
         {
             var parts = new List<EnginePart>();
-            var match = MyRegex().Match(data.ElementAt(row));
+            var match = PartRegex().Match(data.ElementAt(row));
             while(match.Success)
             {
                 var part = new EnginePart()
@@ -49,7 +68,8 @@ namespace Classes.Models
                     Number = int.Parse(match.Value),
                     Row = row,
                     StartColumn = match.Index,
-                    PartNumberLength = match.Length
+                    PartNumberLength = match.Length,
+                    EndColumn = match.Index + match.Length - 1
                 };
                 if(IsPart(part))
                 {
@@ -89,6 +109,34 @@ namespace Classes.Models
         private bool IsSymbol(char c) 
         {
             return c != '.' && !char.IsDigit(c);
+        }
+
+        private List<EngineGear> GetEngineGears(int row)
+        {
+            var gears = new List<EngineGear>();
+            var match = GearRegex().Match(data.ElementAt(row));
+            while (match.Success)
+            {
+                var parts = GetAdjacentParts(row, match.Index);
+                if (parts.Count == 2)
+                {
+                    gears.Add(new EngineGear(parts[0], parts[1]));
+                }
+                match = match.NextMatch();
+            }
+            return gears;
+        }
+
+        private List<EnginePart> GetAdjacentParts(int row, int col)
+        {
+            var startRow = row - 1;
+            var endRow = row + 1;
+            var startCol = col - 1;
+            var endCol = col + 1;
+            return EngineParts.Where(p => p.Row >= startRow 
+                                        && p.Row <= endRow 
+                                        && p.StartColumn <= endCol 
+                                        && p.EndColumn >= startCol).ToList();
         }
     }
 }

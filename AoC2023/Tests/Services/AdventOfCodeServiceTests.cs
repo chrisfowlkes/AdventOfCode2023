@@ -43,5 +43,21 @@ namespace Tests.Services
             //Assert
             Assert.Equal("2286", result);
         }
+
+        /// <summary>
+        /// Test for the SumEnginePartNumbers method.
+        /// </summary>
+        [Fact]
+        public void SumEnginePartNumbers()
+        {
+            //Arrange
+            var data = File.ReadAllLines(".\\Data\\3.txt");
+
+            //Act
+            var result = AdventOfCodeService.SumEnginePartNumbers(data);
+
+            //Assert
+            Assert.Equal("4361", result);
+        }
     }
 }

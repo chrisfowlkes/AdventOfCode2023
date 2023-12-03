@@ -23,6 +23,10 @@ switch (input)
         data = File.ReadAllLines(".\\Data\\2.txt");
         result = AdventOfCodeService.SumPowers(data);
         break;
+    case "3A":
+        data = File.ReadAllLines(".\\Data\\3.txt");
+        result = AdventOfCodeService.SumEnginePartNumbers(data);
+        break;
     default:
         result = "Error";
         break;

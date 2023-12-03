@@ -63,5 +63,16 @@ namespace Classes.Services
 
             return games.Select(game => game.Power).Sum().ToString();
         }
+
+        /// <summary>
+        /// SUms the engine parts in a schematic document.
+        /// </summary>
+        /// <param name="data">Schematic.</param>
+        /// <returns>Sum of the engine part numbers.</returns>
+        public static string SumEnginePartNumbers(ICollection<string> data)
+        {
+            var schematic = new EngineSchematic(data);
+            return schematic.EngineParts.Select(part => part.Number).Sum().ToString();
+        }
     }
 }

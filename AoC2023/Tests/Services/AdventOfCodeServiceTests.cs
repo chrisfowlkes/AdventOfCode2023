@@ -75,5 +75,21 @@ namespace Tests.Services
             //Assert
             Assert.Equal("467835", result);
         }
+
+        /// <summary>
+        /// Tests the SumScratchcardPoints method.
+        /// </summary>
+        [Fact]
+        public void SumScratchcardPoints()
+        {
+            //Arrange
+            var data = File.ReadAllLines(".\\Data\\4.txt");
+
+            //Act
+            var result = AdventOfCodeService.SumScratchcardPoints(data);
+
+            //Assert
+            Assert.Equal("13", result);
+        }
     }
 }

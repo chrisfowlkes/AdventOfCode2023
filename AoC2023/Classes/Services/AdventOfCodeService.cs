@@ -85,5 +85,22 @@ namespace Classes.Services
             var schematic = new EngineSchematic(data);
             return schematic.EngineGears.Select(gear => gear.Ratio).Sum().ToString();
         }
+
+        /// <summary>
+        /// Sums the points for the given scratchcards.
+        /// </summary>
+        /// <param name="data">Scratchcards.</param>
+        /// <returns>Sum of the points of the cards.</returns>
+        public static string SumScratchcardPoints(ICollection<string> data)
+        {
+            var cards = new List<Scratchcard>();
+
+            foreach (var line in data)
+            {
+                cards.Add(new Scratchcard(line));
+            }
+
+            return cards.Select(c => c.GetPoints()).Sum().ToString();
+        }
     }
 }

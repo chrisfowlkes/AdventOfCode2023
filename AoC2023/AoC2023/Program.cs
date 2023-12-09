@@ -35,6 +35,10 @@ switch (input)
         data = File.ReadAllLines(".\\Data\\4.txt");
         result = AdventOfCodeService.SumScratchcardPoints(data);
         break;
+    case "4B":
+        data = File.ReadAllLines(".\\Data\\4.txt");
+        result = AdventOfCodeService.CountScratchcards(data);
+        break;
     default:
         result = "Error";
         break;

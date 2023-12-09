@@ -91,5 +91,21 @@ namespace Tests.Services
             //Assert
             Assert.Equal("13", result);
         }
+
+        /// <summary>
+        /// Tests the CountScratchcardPoints method.
+        /// </summary>
+        [Fact]
+        public void CountScratchcardPoints()
+        {
+            //Arrange
+            var data = File.ReadAllLines(".\\Data\\4.txt");
+
+            //Act
+            var result = AdventOfCodeService.CountScratchcards(data);
+
+            //Assert
+            Assert.Equal("30", result);
+        }
     }
 }

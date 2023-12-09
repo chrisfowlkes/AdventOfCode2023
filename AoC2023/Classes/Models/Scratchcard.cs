@@ -19,16 +19,30 @@ namespace Classes.Models
         /// The actual numbers on the scratchcard.
         /// </summary>
         public List<int> Numbers { get; set; } = [];
+        /// <summary>
+        /// The number of matches of winning numbers.
+        /// </summary>
+        public int Matches { get { return WinningNumbers.Intersect(Numbers).Count(); } }
+        /// <summary>
+        /// The card number.
+        /// </summary>
+        public int CardNumber { get; set; }
+        /// <summary>
+        /// Number of copies of the card.
+        /// </summary>
+        public int Copies { get; set; } = 1;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         public Scratchcard(string description) 
         {
-            var split = description.Split(':')[1].Split('|');
+            var descriptionSplit = description.Split(':');
+            CardNumber = int.Parse(descriptionSplit[0].Split(' ', StringSplitOptions.RemoveEmptyEntries)[1]);
 
-            InsertNumbers(split[0], WinningNumbers);
-            InsertNumbers(split[1], Numbers);
+            var numberSplit = descriptionSplit[1].Split('|');
+            InsertNumbers(numberSplit[0], WinningNumbers);
+            InsertNumbers(numberSplit[1], Numbers);
         }
 
         private static void InsertNumbers(string numbers,  List<int> collection)
@@ -48,16 +62,14 @@ namespace Classes.Models
         /// <returns>Number of points the card is worth.</returns>
         public double GetPoints()
         {
-            var matches = WinningNumbers.Intersect(Numbers).Count();
-
             double points;
-            if(matches == 0)
+            if(Matches == 0)
             {
                 points = 0;
             }
             else
             {
-                points = Math.Pow(2, matches-1);
+                points = Math.Pow(2, Matches-1);
             }
 
             return points;

@@ -102,5 +102,25 @@ namespace Classes.Services
 
             return cards.Select(c => c.GetPoints()).Sum().ToString();
         }
+
+        public static string CountScratchcards(ICollection<string> data)
+        {
+            var cards = new List<Scratchcard>();
+
+            foreach (var line in data)
+            {
+                cards.Add(new Scratchcard(line));
+            }
+
+            foreach (var card in cards)
+            {
+                for (var i = 1; i <= card.Matches; i++)
+                {
+                    cards.Where(c => c.CardNumber == card.CardNumber + i).Single().Copies += card.Copies;
+                }
+            }
+
+            return cards.Select(c => c.Copies).Sum().ToString();
+        }
     }
 }

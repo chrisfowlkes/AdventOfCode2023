@@ -12,6 +12,7 @@ namespace Classes.Models
     public class AlmanacMap
     {
         private readonly MapRange[] ranges;
+        private readonly List<MapRange> flatRanges = [];
 
         /// <summary>
         /// Constructor.

@@ -1,6 +1,7 @@
 ﻿using Classes.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -132,8 +133,9 @@ namespace Classes.Services
         /// Finds the closest seed location.
         /// </summary>
         /// <param name="data">Almanac data.</param>
+        /// <param name="useRange">Flag to use seed line as a range.</param>
         /// <returns>The closest seed location.</returns>
-        public static string FindClosestSeedLocation(ICollection<string> data)
+        public static string FindClosestSeedLocation(ICollection<string> data, bool useRange = false)
         {
             //First line contains the seeds.
             var seeds = new List<long>();
@@ -141,13 +143,31 @@ namespace Classes.Services
             var seedLineSplit = seedLine.Split(':');
             var seedNumbers = seedLineSplit[1].Trim();
             var seedNumbersSplit = seedNumbers.Split(' ');
-            foreach (var seedNumber in seedNumbersSplit)
+
+            if(useRange)
             {
-                seeds.Add(long.Parse(seedNumber));
+                for(var i = 0; i < seedNumbersSplit.Length; i+=2)
+                {
+                    var start = long.Parse(seedNumbersSplit[i]);
+                    var length = long.Parse(seedNumbersSplit[i + 1]);
+                    var end = start + length;
+                    for(var j=start;j<end;j++)
+                    {
+                        seeds.Add(j);
+                    }
+                }
+            }
+            else
+            {
+                foreach (var seedNumber in seedNumbersSplit)
+                {
+                    seeds.Add(long.Parse(seedNumber));
+                }
             }
 
             var almanac = new Almanac(data.Skip(1).ToList());
             var closestLocation = long.MaxValue;
+
             foreach(var seed in seeds)
             {
                 var currentLocation = almanac.CalculateSeedLocation(seed);

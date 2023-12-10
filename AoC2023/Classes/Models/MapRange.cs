@@ -11,9 +11,10 @@ namespace Classes.Models
     /// </summary>
     public class MapRange
     {
-        private readonly long destinationStart;
-        private readonly long sourceStart;
+        private readonly long destinationFirst;
+        private readonly long sourceFirst;
         private readonly long length;
+        private readonly long factor;
 
         /// <summary>
         /// Constructor.
@@ -22,9 +23,10 @@ namespace Classes.Models
         public MapRange(string description)
         {
             var split = description.Split(' ');
-            destinationStart = long.Parse(split[0]);
-            sourceStart = long.Parse(split[1]);
+            destinationFirst = long.Parse(split[0]);
+            sourceFirst = long.Parse(split[1]);
             length = long.Parse(split[2]);
+            factor = destinationFirst - sourceFirst;
         }
 
         /// <summary>
@@ -34,7 +36,7 @@ namespace Classes.Models
         /// <returns>True if the source is in range.</returns>
         public bool InRange(long source)
         {
-            return source >= sourceStart && source < sourceStart + length;
+            return source >= sourceFirst && source < sourceFirst + length;
         }
 
         /// <summary>
@@ -44,7 +46,7 @@ namespace Classes.Models
         /// <returns>The destination number.</returns>
         public long Convert(long source)
         {
-            return source - sourceStart + destinationStart;             
+            return source + factor;             
         }
     }
 }

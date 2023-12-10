@@ -47,6 +47,10 @@ switch (input)
         data = File.ReadAllLines(".\\Data\\5.txt");
         result = AdventOfCodeService.FindClosestSeedLocation(data, true);
         break;
+    case "6A":
+        data = File.ReadAllLines(".\\Data\\6.txt");
+        result = AdventOfCodeService.CalculateProductOfWaysToWinRaces(data);
+        break;
     default:
         result = "Error";
         break;

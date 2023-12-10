@@ -176,5 +176,25 @@ namespace Classes.Services
 
             return closestLocation.ToString();
         }
+
+        /// <summary>
+        /// Determines the ways to win boat races.
+        /// </summary>
+        /// <param name="data">Description of the races.</param>
+        /// <returns>The prodict of the number of ways to win races.</returns>
+        public static string CalculateProductOfWaysToWinRaces(ICollection<string> data)
+        {
+            var times = data.ElementAt(0).Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            var distances = data.ElementAt(1).Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+            double product = 1;
+            for(int i=1;i<times.Length;i++)
+            {
+                var race = new Race(times[i], distances[i]);
+                product *= race.WaysToWin;
+            }
+
+            return product.ToString();
+        }
     }
 }

@@ -107,5 +107,21 @@ namespace Tests.Services
             //Assert
             Assert.Equal("30", result);
         }
+
+        /// <summary>
+        /// Tests the FindClosestSeedLocation method.
+        /// </summary>
+        [Fact]
+        public void FindClosestSeedLocation()
+        {
+            //Arrange
+            var data = File.ReadAllLines(".\\Data\\5.txt");
+
+            //Act
+            var result = AdventOfCodeService.FindClosestSeedLocation(data);
+
+            //Assert
+            Assert.Equal("35", result);
+        }
     }
 }

@@ -103,6 +103,11 @@ namespace Classes.Services
             return cards.Select(c => c.GetPoints()).Sum().ToString();
         }
 
+        /// <summary>
+        /// Counts the scratchcards.
+        /// </summary>
+        /// <param name="data">Scratchcards.</param>
+        /// <returns>Total scratchcard count including scratchcards won.</returns>
         public static string CountScratchcards(ICollection<string> data)
         {
             var cards = new List<Scratchcard>();
@@ -121,6 +126,35 @@ namespace Classes.Services
             }
 
             return cards.Select(c => c.Copies).Sum().ToString();
+        }
+
+        /// <summary>
+        /// Finds the closest seed location.
+        /// </summary>
+        /// <param name="data">Almanac data.</param>
+        /// <returns>The closest seed location.</returns>
+        public static string FindClosestSeedLocation(ICollection<string> data)
+        {
+            //First line contains the seeds.
+            var seeds = new List<long>();
+            var seedLine = data.First();
+            var seedLineSplit = seedLine.Split(':');
+            var seedNumbers = seedLineSplit[1].Trim();
+            var seedNumbersSplit = seedNumbers.Split(' ');
+            foreach (var seedNumber in seedNumbersSplit)
+            {
+                seeds.Add(long.Parse(seedNumber));
+            }
+
+            var almanac = new Almanac(data.Skip(1).ToList());
+            var closestLocation = long.MaxValue;
+            foreach(var seed in seeds)
+            {
+                var currentLocation = almanac.CalculateSeedLocation(seed);
+                closestLocation = Math.Min(closestLocation, currentLocation);
+            }
+
+            return closestLocation.ToString();
         }
     }
 }

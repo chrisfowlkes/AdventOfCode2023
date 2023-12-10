@@ -181,20 +181,35 @@ namespace Classes.Services
         /// Determines the ways to win boat races.
         /// </summary>
         /// <param name="data">Description of the races.</param>
-        /// <returns>The prodict of the number of ways to win races.</returns>
+        /// <returns>The product of the number of ways to win races.</returns>
         public static string CalculateProductOfWaysToWinRaces(ICollection<string> data)
         {
             var times = data.ElementAt(0).Split(' ', StringSplitOptions.RemoveEmptyEntries);
             var distances = data.ElementAt(1).Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
             double product = 1;
-            for(int i=1;i<times.Length;i++)
+            for (int i = 1; i < times.Length; i++)
             {
                 var race = new Race(times[i], distances[i]);
                 product *= race.WaysToWin;
             }
 
             return product.ToString();
+        }
+
+        /// <summary>
+        /// Determines the ways to win a single boat race.
+        /// </summary>
+        /// <param name="data">Description of the race.</param>
+        /// <returns>The number of ways to win races.</returns>
+        public static string CalculateWaysToWinRace(ICollection<string> data)
+        {
+            var time = string.Join("", data.ElementAt(0).Split(' ', StringSplitOptions.RemoveEmptyEntries).Skip(1));
+            var distance = string.Join("", data.ElementAt(1).Split(' ', StringSplitOptions.RemoveEmptyEntries).Skip(1));
+
+            var race = new Race(time, distance);
+
+            return race.WaysToWin.ToString();
         }
     }
 }

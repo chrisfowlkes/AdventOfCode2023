@@ -138,5 +138,18 @@ namespace Tests.Services
             //Assert
             Assert.Equal("288", result);
         }
+
+        [Fact]
+        public void CalculateWaysToWinRace()
+        {
+            //Arrange
+            var data = File.ReadAllLines(".\\Data\\6.txt");
+
+            //Act
+            var result = AdventOfCodeService.CalculateWaysToWinRace(data);
+
+            //Assert
+            Assert.Equal("71503", result);
+        }
     }
 }

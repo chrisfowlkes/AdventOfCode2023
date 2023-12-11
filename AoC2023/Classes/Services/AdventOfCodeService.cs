@@ -216,14 +216,15 @@ namespace Classes.Services
         /// Plays camel cards.
         /// </summary>
         /// <param name="data">The hands.</param>
+        /// <param name="wildcard">Wildcard flag.</param>
         /// <returns>The point total.</returns>
-        public static string PlayCamelCards(ICollection<string> data)
+        public static string PlayCamelCards(ICollection<string> data, bool wildcard = false)
         {
             var hands = new Hand[data.Count];
 
             for (int i = 0; i < hands.Length; i++)
             {
-                hands[i] = new Hand(data.ElementAt(i));
+                hands[i] = new Hand(data.ElementAt(i), wildcard);
             }
             Array.Sort(hands);
 

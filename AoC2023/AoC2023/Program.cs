@@ -59,6 +59,10 @@ switch (input)
         data = File.ReadAllLines(".\\Data\\7.txt");
         result = AdventOfCodeService.PlayCamelCards(data);
         break;
+    case "7B":
+        data = File.ReadAllLines(".\\Data\\7.txt");
+        result = AdventOfCodeService.PlayCamelCards(data, true);
+        break;
     default:
         result = "Error";
         break;

@@ -111,6 +111,8 @@ namespace Tests.Services
         /// <summary>
         /// Tests the FindClosestSeedLocation method.
         /// </summary>
+        /// <param name="expected">Expected result.</param>
+        /// <param name="useRange">UseRange flag.</param>
         [Theory]
         [InlineData(false, "35")]
         [InlineData(true, "46")]
@@ -126,6 +128,9 @@ namespace Tests.Services
             Assert.Equal(expected, result);
         }
 
+        /// <summary>
+        /// Tests the CalculateProductOfWaysToWinRaces method.
+        /// </summary>
         [Fact]
         public void CalculateProductOfWaysToWinRaces()
         {
@@ -139,6 +144,9 @@ namespace Tests.Services
             Assert.Equal("288", result);
         }
 
+        /// <summary>
+        /// Tests the CalculateWaysToWinRace method.
+        /// </summary>
         [Fact]
         public void CalculateWaysToWinRace()
         {
@@ -152,17 +160,24 @@ namespace Tests.Services
             Assert.Equal("71503", result);
         }
 
-        [Fact]
-        public void PlayCamelCards()
+        /// <summary>
+        /// Tests the PlayCamelCards method.
+        /// </summary>
+        /// <param name="wildcard">Wildcard flag.</param>
+        /// <param name="expected">Expected result.</param>
+        [InlineData(false, "6440")]
+        [InlineData(true, "5905")]
+        [Theory]
+        public void PlayCamelCards(bool wildcard, string expected)
         {
             //Arrange
             var data = File.ReadAllLines(".\\Data\\7.txt");
 
             //Act
-            var result = AdventOfCodeService.PlayCamelCards(data);
+            var result = AdventOfCodeService.PlayCamelCards(data, wildcard);
 
             //Assert
-            Assert.Equal("6440", result);
+            Assert.Equal(expected, result);
         }
     }
 }

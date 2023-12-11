@@ -30,64 +30,87 @@ namespace Classes.Models
         /// Rank of the hand.
         /// </summary>
         internal HandType HandType { get; private set; }
-        private readonly char[] cardRanks = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
+        private readonly bool wildcard;
+        private readonly char[] cardRanks;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="description">Description of the hand.</param>
-        public Hand(string description)
+        public Hand(string description, bool wildcard = false)
         {
             var split = description.Trim().Split(' ');
             cards = split[0].ToCharArray();
             Bid = int.Parse(split[1]);
+            this.wildcard = wildcard;
+            if(wildcard)
+            {
+                cardRanks = ['J', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'Q', 'K', 'A'];
+            }
+            else
+            {
+                cardRanks = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
+            }
             RankHand();
         }
 
         private void RankHand()
         {
-            var labels = cards.Distinct().ToArray();
-            if (labels.Length == 1)
+            var labelCounts = CountLabels();
+            int wildcardCount;
+            if(wildcard)
+            {
+                wildcardCount = labelCounts[0];
+                labelCounts = labelCounts.Skip(1).ToArray();
+            }
+            else
+            {
+                wildcardCount = 0;
+            }
+            var maxCount = labelCounts.Max() + wildcardCount;
+            if (maxCount == 5)
             {
                 HandType = HandType.FiveOfAKind;
             } 
             else
             {
-                var labelCounts = CountLabels(labels);
-                var maxCount = labelCounts.Max();
                 if (maxCount == 4)
                 {
                     HandType = HandType.FourOfAKind;
-                } 
-                else if(labels.Length == 2)
-                {
-                    HandType = HandType.FullHouse;
-                }
-                else if(maxCount == 3)
-                {
-                    HandType = HandType.ThreeOfAKind;
-                }
-                else if(labels.Length == 3)
-                {
-                    HandType = HandType.TwoPair;
-                }
-                else if (maxCount == 2)
-                {
-                    HandType = HandType.OnePair;
                 }
                 else
                 {
-                    HandType = HandType.HighCard;
+                    var uniqueTypes = labelCounts.Where(i => i > 0).Count();
+                    if (uniqueTypes <= 2)
+                    {
+                        HandType = HandType.FullHouse;
+                    }
+                    else if (maxCount == 3)
+                    {
+                        HandType = HandType.ThreeOfAKind;
+                    }
+                    else if (uniqueTypes == 3)
+                    {
+                        HandType = HandType.TwoPair;
+                    }
+                    else if (maxCount == 2)
+                    {
+                        HandType = HandType.OnePair;
+                    }
+                    else
+                    {
+                        HandType = HandType.HighCard;
+                    }
                 }
             }
         }
 
-        private int[] CountLabels(char[] labels)
+        private int[] CountLabels()
         {
-            var counts = new int[labels.Length];
-            for (var i=0; i<labels.Length; i++)
+            var counts = new int[cardRanks.Length];
+            for (var i = 0; i < cardRanks.Length; i++)
             {
-                counts[i] = CountLabels(labels[i]);
+                counts[i] = CountLabels(cardRanks[i]);
             }
 
             return counts;

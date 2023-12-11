@@ -151,5 +151,18 @@ namespace Tests.Services
             //Assert
             Assert.Equal("71503", result);
         }
+
+        [Fact]
+        public void PlayCamelCards()
+        {
+            //Arrange
+            var data = File.ReadAllLines(".\\Data\\7.txt");
+
+            //Act
+            var result = AdventOfCodeService.PlayCamelCards(data);
+
+            //Assert
+            Assert.Equal("6440", result);
+        }
     }
 }

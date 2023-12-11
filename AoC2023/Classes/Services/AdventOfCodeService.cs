@@ -211,5 +211,29 @@ namespace Classes.Services
 
             return race.WaysToWin.ToString();
         }
+
+        /// <summary>
+        /// Plays camel cards.
+        /// </summary>
+        /// <param name="data">The hands.</param>
+        /// <returns>The point total.</returns>
+        public static string PlayCamelCards(ICollection<string> data)
+        {
+            var hands = new Hand[data.Count];
+
+            for (int i = 0; i < hands.Length; i++)
+            {
+                hands[i] = new Hand(data.ElementAt(i));
+            }
+            Array.Sort(hands);
+
+            int winnings = 0;
+            for (int i = 0; i < hands.Length; i++)
+            {
+                winnings += (i + 1) * hands[i].Bid;
+            }
+
+            return winnings.ToString();
+        }
     }
 }

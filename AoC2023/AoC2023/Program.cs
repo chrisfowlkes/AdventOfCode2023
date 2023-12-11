@@ -55,6 +55,10 @@ switch (input)
         data = File.ReadAllLines(".\\Data\\6.txt");
         result = AdventOfCodeService.CalculateWaysToWinRace(data);
         break;
+    case "7A":
+        data = File.ReadAllLines(".\\Data\\7.txt");
+        result = AdventOfCodeService.PlayCamelCards(data);
+        break;
     default:
         result = "Error";
         break;

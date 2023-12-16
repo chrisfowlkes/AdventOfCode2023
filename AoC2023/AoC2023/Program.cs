@@ -1,4 +1,5 @@
 ﻿using Classes;
+using Classes.Models;
 using Classes.Services;
 
 var input = Console.ReadLine();
@@ -62,6 +63,11 @@ switch (input)
     case "7B":
         data = File.ReadAllLines(".\\Data\\7.txt");
         result = AdventOfCodeService.PlayCamelCards(data, true);
+        break;
+    case "8A":
+        data = File.ReadAllLines(".\\Data\\8.txt");
+        var map = new DesertMap(data);
+        result = map.Navigate();
         break;
     default:
         result = "Error";

@@ -22,12 +22,21 @@ namespace Classes.Models
         }
 
         /// <summary>
-        /// Sums the extrapolated values from the histories.
+        /// Sums the extrapolated next values from the histories.
         /// </summary>
-        /// <returns>Sum of the extrapolated history values.</returns>
-        public string SumExtrapolatedValues()
+        /// <returns>Sum of the extrapolated next history values.</returns>
+        public string SumExtrapolatedNextValues()
         {
-            return histories.Select(h => h.ExtrapolatedValue).Sum().ToString();
+            return histories.Select(h => h.ExtrapolatedNextValue).Sum().ToString();
+        }
+
+        /// <summary>
+        /// Sums the extrapolated previous values from the histories.
+        /// </summary>
+        /// <returns>Sum of the extrapolated previous history values.</returns>
+        public string SumExtrapolatedPreviousValues()
+        {
+            return histories.Select(h => h.ExtrapolatedPreviousValue).Sum().ToString();
         }
     }
 }

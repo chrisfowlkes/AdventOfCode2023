@@ -76,8 +76,13 @@ switch (input)
         break;
     case "9A":
         data = File.ReadAllLines(".\\Data\\9.txt");
-        var history = new OasisReport(data);
-        result = history.SumExtrapolatedValues();
+        var historyNext = new OasisReport(data);
+        result = historyNext.SumExtrapolatedNextValues();
+        break;
+    case "9B":
+        data = File.ReadAllLines(".\\Data\\9.txt");
+        var historyPrevious = new OasisReport(data);
+        result = historyPrevious.SumExtrapolatedPreviousValues();
         break;
     default:
         result = "Error";

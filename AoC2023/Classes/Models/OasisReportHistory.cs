@@ -16,8 +16,12 @@ namespace Classes.Models
         /// <summary>
         /// The extrapolated next value for the history.
         /// </summary>
-        internal int ExtrapolatedValue { get { return sequences[0].Last(); } }
-        
+        internal int ExtrapolatedNextValue { get { return sequences[0].Last(); } }
+        /// <summary>
+        /// The extrapolated next value for the history.
+        /// </summary>
+        internal int ExtrapolatedPreviousValue { get { return sequences[0][0]; } }
+
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -57,6 +61,13 @@ namespace Classes.Models
             for(int i = sequences.Count - 1; i > 0; i--)
             {
                 sequences[i - 1].Add(sequences[i - 1].Last() + sequences[i].Last());
+            }
+
+            //Use a similar algorithm to extrapolate a previous value.
+            lastSequence.Add(0);//The last row is all 0, so it doesn't matter that we put this at the end.
+            for (int i = sequences.Count - 1; i > 0; i--)
+            {
+                sequences[i - 1].Insert(0, sequences[i - 1][0] - sequences[i][0]);
             }
         }
     }

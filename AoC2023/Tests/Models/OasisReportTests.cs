@@ -14,20 +14,37 @@ namespace Tests.Models
     public class OasisReportTests
     {
         /// <summary>
-        /// Tests the SumExtrapolatedValues method.
+        /// Tests the SumExtrapolatedNextValues method.
         /// </summary>
         [Fact]
-        public void SumExtrapolatedValues()
+        public void SumExtrapolatedNextValues()
         {
             //Arrange
             var data = File.ReadAllLines(@".\Data\9.txt");
             var report = new OasisReport(data);
 
             //Act
-            var result = report.SumExtrapolatedValues();
+            var result = report.SumExtrapolatedNextValues();
 
             //Assert
             Assert.Equal("114", result);
+        }
+
+        /// <summary>
+        /// Tests the SumExtrapolatedPreviousValues method.
+        /// </summary>
+        [Fact]
+        public void SumExtrapolatedPreviousValues()
+        {
+            //Arrange
+            var data = File.ReadAllLines(@".\Data\9.txt");
+            var report = new OasisReport(data);
+
+            //Act
+            var result = report.SumExtrapolatedPreviousValues();
+
+            //Assert
+            Assert.Equal("2", result);
         }
     }
 }

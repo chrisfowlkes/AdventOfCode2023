@@ -74,6 +74,11 @@ switch (input)
         var multiMap = new DesertMap(data);
         result = multiMap.Navigate(true);
         break;
+    case "9A":
+        data = File.ReadAllLines(".\\Data\\9.txt");
+        var history = new OasisReport(data);
+        result = history.SumExtrapolatedValues();
+        break;
     default:
         result = "Error";
         break;

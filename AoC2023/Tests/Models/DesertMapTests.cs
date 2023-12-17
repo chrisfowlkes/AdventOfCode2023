@@ -15,17 +15,21 @@ namespace Tests.Models
         /// <summary>
         /// Tests the navigate method.
         /// </summary>
+        /// <param name="input">Input file.</param>
+        /// <param name="multi">Multi flag passed to method.</param>
+        /// <param name="expected">Expected value.</param>
         [Theory()]
-        [InlineData(".\\Data\\8A.txt", "2")]
-        [InlineData(".\\Data\\8B.txt", "6")]
-        public void Navigate(string input, string expected)
+        [InlineData(".\\Data\\8A.txt", false, "2")]
+        [InlineData(".\\Data\\8B.txt", false, "6")]
+        [InlineData(".\\Data\\8C.txt", true, "6")]
+        public void Navigate(string input, bool multi, string expected)
         {
             //Arrange
             var data = File.ReadAllLines(input);
             var map = new DesertMap(data);
 
             //Act
-            var steps = map.Navigate();
+            var steps = map.Navigate(multi);
 
             //Assert
             Assert.Equal(expected, steps);

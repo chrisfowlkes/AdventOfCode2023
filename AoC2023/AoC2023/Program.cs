@@ -69,6 +69,11 @@ switch (input)
         var map = new DesertMap(data);
         result = map.Navigate();
         break;
+    case "8B":
+        data = File.ReadAllLines(".\\Data\\8.txt");
+        var multiMap = new DesertMap(data);
+        result = multiMap.Navigate(true);
+        break;
     default:
         result = "Error";
         break;

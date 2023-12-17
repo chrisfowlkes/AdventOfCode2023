@@ -30,7 +30,7 @@ namespace Classes.Models
         /// <param name="line">Data for the node.</param>
         internal DesertMapNode (string line)
         {
-            Id = line.Substring(0, 3);
+            Id = line[..3];
             Left = line.Substring(7, 3);
             Right = line.Substring(12, 3);
         }

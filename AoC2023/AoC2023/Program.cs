@@ -84,6 +84,11 @@ switch (input)
         var historyPrevious = new OasisReport(data);
         result = historyPrevious.SumExtrapolatedPreviousValues();
         break;
+    case "10A":
+        data = File.ReadAllLines(".\\Data\\10.txt");
+        var sketch = new SurfacePipeSketch(data);
+        result = sketch.CalculateDistanceToFurthestPipe();
+        break;
     default:
         result = "Error";
         break;

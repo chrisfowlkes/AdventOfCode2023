@@ -18,7 +18,10 @@ namespace Classes.Models
     /// <param name="y">Y coordinate of the pipe.</param>
     internal class SurfacePipe(char pipeType, int x, int y)
     {
-        private readonly char pipeType = pipeType;
+        /// <summary>
+        /// Type of pipe.
+        /// </summary>
+        public char PipeType { get; set; } = pipeType;
         /// <summary>
         /// Location of the pipe.
         /// </summary>
@@ -31,7 +34,7 @@ namespace Classes.Models
         public List<Point> GetConnectedLocations()
         {
             var connected = new List<Point>();
-            switch(pipeType)
+            switch(PipeType)
             {
                 case '|':
                     connected.Add(new Point(Location.X, Location.Y - 1));

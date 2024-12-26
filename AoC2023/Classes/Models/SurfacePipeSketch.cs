@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Drawing;
@@ -15,6 +16,7 @@ namespace Classes.Models
     {
         private readonly List<List<SurfacePipe>> pipes = [];
         private readonly SurfacePipe? start;
+        private readonly List<SurfacePipe> path = [];
 
         /// <summary>
         /// Constructor.
@@ -42,16 +44,68 @@ namespace Classes.Models
                 this.pipes.Add(row);
                 y++;
             }
+
+            Trace();
         }
 
         public string CalculateDistanceToFurthestPipe()
         {
-            int steps = 0;
+            int steps = path.Count / 2;
+            return steps.ToString();
+        }
+
+        public string CountInternalPoints()
+        {
+            var count = 0;
+
+            foreach (var row in this.pipes)
+            {
+                var inside = false;
+                foreach (var pipe in row)
+                {
+                    if (path.Contains(pipe))
+                    {
+                        if (pipe.PipeType != '-')//This is a continuation of the last threshold.
+                        {
+                            inside = !inside;
+                        }
+                    }
+                    else
+                    {
+                        if(inside)
+                        {
+                            count++;
+                        }
+                    }
+                }
+            }
+
+            return count.ToString();
+        }
+
+        private void Trace()
+        {
             //Trace the pipes from the start.
             if (start != null)
             {
+                FindStart();
+
+                //Walk through pipes till we get back to the furthest pipe.
+                List<SurfacePipe> currentPipes = [start];
+                while (path.Last().GetConnectedLocations().Where(l => path.Select(p => p.Location).Contains(l)).Count() == 1)
+                {
+                    var next = path.Last().GetConnectedLocations().Where(l => l != path[path.Count-2].Location).Single();
+                    path.Add(this.pipes[next.Y][next.X]);
+                }
+            }
+        }
+
+        private void FindStart()
+        {
+            if(start != null)
+            {
+                path.Add(this.start);
                 //Need to analyze the tiles around the start and see which ones connect to it.
-                var nextPipes = new List<SurfacePipe>();
                 var minX = Math.Max(0, start.Location.X - 1);
                 var maxX = Math.Min(this.pipes[0].Count - 1, start.Location.X + 1);
                 var minY = Math.Max(0, start.Location.Y - 1);
@@ -65,29 +119,13 @@ namespace Classes.Models
                         {
                             if (this.pipes[y][x].GetConnectedLocations().Where(p => p.X == start.Location.X && p.Y == start.Location.Y).Any())
                             {
-                                nextPipes.Add(this.pipes[y][x]);
+                                path.Add(this.pipes[y][x]);
+                                return;
                             }
                         }
                     }
                 }
-
-                //Walk through pipes till we get back to the furthest pipe.
-                List<SurfacePipe> currentPipes = [start];
-                steps++;//Account for the first step.
-                while (nextPipes.Select(p => p.Location).Distinct().Count() > 1)
-                {
-                    var lastLocations = currentPipes.Select(p => p.Location);
-                    currentPipes = nextPipes;
-                    nextPipes = [];
-                    var nextLocations = currentPipes.SelectMany(p => p.GetConnectedLocations()).Where(l => !lastLocations.Contains(l));
-                    foreach (var location in nextLocations)
-                    {
-                        nextPipes.Add(this.pipes[location.Y][location.X]);
-                    }
-                    steps++;
-                }
             }
-            return steps.ToString();
         }
     }
 }
